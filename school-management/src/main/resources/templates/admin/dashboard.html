@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<section>
+    <div class="container-fluid">
+        <h1 class="mb-4">Dashboard</h1>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card stat-card shadow-sm h-100">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title text-uppercase text-muted">Total Siswa</h5>
+                            <h2 class="fw-bold" th:text="${jumlahSiswa}">0</h2>
+                        </div>
+                        <div class="stat-icon text-primary">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card stat-card shadow-sm h-100" style="border-left-color: #198754;">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title text-uppercase text-muted">Total Guru</h5>
+                            <h2 class="fw-bold" th:text="${jumlahGuru}">0</h2>
+                        </div>
+                        <div class="stat-icon text-success">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card stat-card shadow-sm h-100" style="border-left-color: #fd7e14;">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title text-uppercase text-muted">Mata Pelajaran</h5>
+                            <h2 class="fw-bold">5</h2> </div>
+                        <div class="stat-icon text-warning">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Aksi Cepat
+            </div>
+            <div class="card-body">
+                <a th:href="@{/admin/siswa/new}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Tambah Siswa</a>
+                <a th:href="@{/admin/guru/new}" class="btn btn-success"><i class="fa-solid fa-plus"></i> Tambah Guru</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

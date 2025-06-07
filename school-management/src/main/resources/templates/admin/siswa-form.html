@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<section>
+    <div class="container-fluid">
+        <div class="card" style="max-width: 700px;">
+            <div class="card-header">
+                <h3 th:text="${pageTitle}"></h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/admin/siswa/save}" th:object="${siswa}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:if="*{user != null}" th:field="*{user}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Nama Siswa</label>
+                        <input type="text" class="form-control" th:field="*{nama}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nomor Induk Siswa (NIS)</label>
+                        <input type="text" class="form-control" th:field="*{nis}" required th:readonly="*{id != null}">
+                        <div class="form-text" th:if="*{id == null}">NIS akan menjadi username. Password default adalah 'siswa123'.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kelas</label>
+                        <input type="text" class="form-control" th:field="*{kelas}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Simpan</button>
+                    <a th:href="@{/admin/siswa}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Input Nilai</title>
+</head>
+<body>
+<section>
+    <div class="container-fluid">
+        <h3>Input Nilai untuk: <span th:text="${siswa.nama}"></span></h3>
+        <hr>
+        <div class="card" style="max-width: 600px;">
+            <div class="card-body">
+                <form th:action="@{/guru/nilai/save}" th:object="${nilai}" method="post">
+                    <input type="hidden" th:field="*{siswa}">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Mata Pelajaran</label>
+                        <select class="form-select" th:field="*{mataPelajaran}" required>
+                            <option value="">-- Pilih Mata Pelajaran --</option>
+                            <option th:each="mapel : ${listMapel}" th:value="${mapel.id}" th:text="${mapel.namaMatpel}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nilai Tugas</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{nilaiTugas}" required>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Nilai UTS</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{nilaiUts}" required>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Nilai UAS</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{nilaiUas}" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Simpan Nilai</button>
+                    <a th:href="@{/guru/dashboard}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

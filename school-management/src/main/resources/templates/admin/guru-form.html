@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<section>
+    <div class="container-fluid">
+        <div class="card" style="max-width: 700px;">
+            <div class="card-header"><h3 th:text="${pageTitle}"></h3></div>
+            <div class="card-body">
+                <form th:action="@{/admin/guru/save}" th:object="${guru}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:if="*{user != null}" th:field="*{user}">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Guru</label>
+                        <input type="text" class="form-control" th:field="*{nama}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nomor Induk Pegawai (NIP)</label>
+                        <input type="number" class="form-control" th:field="*{nip}" required th:readonly="*{id != null}">
+                        <div class="form-text" th:if="*{id == null}">NIP akan menjadi username. Password default 'guru123'.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Simpan</button>
+                    <a th:href="@{/admin/guru}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
