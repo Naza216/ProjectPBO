@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Rapor - ' + ${siswa.nama}">Rapor Siswa</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11pt;
+            line-height: 1.5;
+        }
+        .raport-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .header-title {
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 25px;
+            font-size: 14pt;
+        }
+        .biodata-table {
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 11pt;
+        }
+        .biodata-table td {
+            padding: 2px 5px;
+            vertical-align: top;
+        }
+        .biodata-table td:nth-child(1) { width: 30%; }
+        .biodata-table td:nth-child(2) { width: 5%; text-align: center; }
+        .biodata-table td:nth-child(3) { width: 65%; }
+        .nilai-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .nilai-table th, .nilai-table td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .nilai-table .mapel-col {
+            text-align: left;
+        }
+        .nilai-table .group-header {
+            text-align: left;
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        .catatan {
+            margin-top: 25px;
+        }
+        .catatan p {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .catatan ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .catatan li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="raport-container">
+    <div class="header-title">REKAP NILAI RAPORT</div>
+
+    <table class="biodata-table">
+        <tr>
+            <td>NAMA</td>
+            <td>:</td>
+            <td th:text="${siswa.nama}">NAMA SISWA</td>
+        </tr>
+        <tr>
+            <td>KELAS</td>
+            <td>:</td>
+            <td th:text="${siswa.kelas}">KELAS SISWA</td>
+        </tr>
+        <tr>
+            <td>NIS</td>
+            <td>:</td>
+            <td th:text="${siswa.nis}">NOMOR NIS</td>
+        </tr>
+        <tr>
+            <td>TEMPAT, TANGGAL LAHIR</td>
+            <td>:</td>
+            <td th:text="${siswa.tanggalLahir}">Tempat, 99-99-9999</td>
+        </tr>
+        <tr>
+            <td>JENIS KELAMIN</td>
+            <td>:</td>
+            <td th:text="${siswa.jenisKelamin}">Laki-Laki/Perempuan</td>
+        </tr>
+        <tr>
+            <td>NAMA ORANG TUA (AYAH)</td>
+            <td>:</td>
+            <td th:text="${siswa.namaOrangTua}">NAMA AYAH</td>
+        </tr>
+    </table>
+
+    <table class="nilai-table">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 5%;">No</th>
+                <th rowspan="2" style="width: 35%;">MATA PELAJARAN</th>
+                <th colspan="5">NILAI</th>
+            </tr>
+            <tr>
+                <th style="width: 12%;">Tugas</th>
+                <th style="width: 12%;">UTS</th>
+                <th style="width: 12%;">UAS</th>
+                <th style="width: 12%;">Akhir</th>
+                <th style="width: 12%;">Ket.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="7" class="group-header">A. MATA PELAJARAN UMUM</td>
+            </tr>
+
+            <tr th:each="nilai, iterStat : ${listNilai}">
+                <td th:text="${iterStat.count}"></td>
+                <td class="mapel-col" th:text="${nilai.mataPelajaran.namaMataPelajaran}"></td>
+                <td th:text="${nilai.nilaiTugas}"></td>
+                <td th:text="${nilai.nilaiUts}"></td>
+                <td th:text="${nilai.nilaiUas}"></td>
+                <td th:text="${#numbers.formatDecimal(nilai.hitungNilaiAkhir(), 0, 1)}"></td>
+                <td th:text="${nilai.hitungNilaiAkhir() >= 75 ? 'Lulus' : 'Remidi'}"></td>
+            </tr>
+             <tr th:if="${listNilai == null or listNilai.isEmpty()}">
+                <td colspan="7" class="text-center">Belum ada data nilai.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="catatan">
+        <p>Catatan:</p>
+        <ol>
+            <li>Nilai yang disajikan adalah rata-rata nilai pengetahuan dan keterampilan tiap semester.</li>
+            <li>Nilai pembulatan (tanpa pecahan desimal).</li>
+            <li>Lintas minat adalah satu lintas minat yang sampai sekarang (sampai kelas XII).</li>
+            <li>Gunakan pulpen pakai tinta hitam, jangan sampai anda dirugikan dengan tulisan angka yang tidak jelas.</li>
+            <li>Hindari penggunaan tipe x.</li>
+            <li>Hati-hati dalam urutan mata pelajaran, jika tidak sama dengan urutan di raport. Khususnya mata pelajaran Peminatan.</li>
+        </ol>
+    </div>
+</div>
+
+</body>
+</html>

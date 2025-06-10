@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb-item">
+        <li class="breadcrumb-item"><a th:href="@{/guru/dashboard}">Guru</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/guru/manajemen-siswa}">Manajemen Siswa</a></li>
+    </div>
+    <div layout:fragment="breadcrumb-active" th:text="${isEdit ? 'Edit Nilai' : 'Input Nilai'}">Input Nilai</div>
+
+    <div layout:fragment="content">
+        <h1 class="mb-4" th:text="${isEdit ? 'Edit Nilai' : 'Input Nilai'}"></h1>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0" th:text="${isEdit ? 'Form Edit Nilai' : 'Form Input Nilai'}"></h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-secondary mb-4 border-0 rounded-3" th:if="${siswa != null}">
+                    <h6 class="alert-heading mb-0"><i class="fas fa-user-circle me-2"></i> Siswa: <span th:text="${siswa.nama}">[Nama Siswa]</span> (<span th:text="${siswa.nis}">[NIS]</span>)</h6>
+                    <p class="mb-0"><strong>Kelas:</strong> <span th:text="${siswa.kelas}">[Kelas Siswa]</span></p>
+                </div>
+
+                <form th:action="@{/guru/simpan-nilai}" method="post">
+                    <input type="hidden" name="nis" th:value="${nilaiForm.nis}" />
+                    <input type="hidden" name="nilaiId" th:if="${isEdit}" th:value="${nilaiId}" />
+
+                    <div class="mb-3">
+                        <label for="mataPelajaran" class="form-label fw-bold">Mata Pelajaran:</label>
+                        <select id="mataPelajaran" name="idMataPelajaran" class="form-select" required>
+                            <option value="">-- Pilih Mata Pelajaran --</option>
+                            <option th:each="mp : ${listMataPelajaran}"
+                                    th:value="${mp.id}"
+                                    th:text="${mp.namaMataPelajaran}"
+                                    th:selected="${nilaiForm.idMataPelajaran == mp.id}">Matematika</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nilaiTugas" class="form-label fw-bold">Nilai Tugas:</label>
+                        <input type="number" id="nilaiTugas" name="nilaiTugas" th:value="${nilaiForm.nilaiTugas}" class="form-control" min="0" max="100" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nilaiUts" class="form-label fw-bold">Nilai UTS:</label>
+                        <input type="number" id="nilaiUts" name="nilaiUts" th:value="${nilaiForm.nilaiUts}" class="form-control" min="0" max="100" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nilaiUas" class="form-label fw-bold">Nilai UAS:</label>
+                        <input type="number" id="nilaiUas" name="nilaiUas" th:value="${nilaiForm.nilaiUas}" class="form-control" min="0" max="100" required>
+                    </div>
+
+                    <div class="d-flex justify-content-end pt-3">
+                        <a th:href="@{/guru/manajemen-siswa}" class="btn btn-outline-secondary me-2"><i class="fas fa-times-circle me-2"></i> Batal</a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i> Simpan Nilai</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Status Penilaian Siswa</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h4 class="mb-1">Status Kelengkapan Nilai</h4>
+    <p class="text-muted mb-4">
+        Untuk Siswa: <strong th:text="${siswa.nama}">[Nama Siswa]</strong> 
+        (NIS: <span th:text="${siswa.nis}">[NIS Siswa]</span>)
+    </p>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i> Mata Pelajaran Belum Dinilai</h5>
+                </div>
+                <div class="card-body">
+                    <div th:if="${mapelBelumDinilai.isEmpty()}" class="text-center p-4">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <h6 class="text-success">Luar Biasa!</h6>
+                        <p class="text-muted mb-0">Semua mata pelajaran telah selesai dinilai untuk siswa ini.</p>
+                    </div>
+                    <ul th:unless="${mapelBelumDinilai.isEmpty()}" class="list-group list-group-flush">
+                        <li th:each="mapel : ${mapelBelumDinilai}" class="list-group-item d-flex justify-content-between align-items-center">
+                            <span th:text="${mapel.namaMataPelajaran}">Nama Mata Pelajaran</span>
+                            <a th:href="@{/guru/input-nilai/{nis}(nis=${siswa.nis})}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-keyboard me-1"></i> Input Nilai
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-list-check me-2"></i> Nilai Sudah Tercatat</h5>
+                </div>
+                <div class="card-body">
+                     <div th:if="${nilaiYangSudahAda.isEmpty()}" class="text-center p-4">
+                        <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
+                        <p class="text-muted mb-0">Belum ada nilai yang tercatat untuk siswa ini.</p>
+                    </div>
+                    <div th:unless="${nilaiYangSudahAda.isEmpty()}" class="table-responsive">
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr th:each="nilai : ${nilaiYangSudahAda}">
+                                    <td class="fw-bold" th:text="${nilai.mataPelajaran.namaMataPelajaran}"></td>
+                                    <td><span class="badge bg-light text-dark" th:text="'Nilai Akhir: ' + ${#numbers.formatDecimal(nilai.hitungNilaiAkhir(), 0, 1)}"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

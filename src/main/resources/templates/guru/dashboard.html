@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Dashboard Guru</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="mb-4">
+        <h4>Dashboard Guru</h4>
+        <p class="text-muted">Selamat Datang, <span th:text="${namaGuru} ?: 'Pengguna'">Nama Guru</span>!</p>
+    </div>
+
+    <h5 class="text-muted mb-3">Rekap Data Anda</h5>
+    <div class="row g-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card" style="background-color: #e7f0fe; border-left-color: #4b88e4;">
+                <div class="stat-card-icon" style="color: #4b88e4;"><i class="fas fa-chalkboard"></i></div>
+                <div class="stat-card-number" th:text="${jumlahKelasDiajar} ?: '0'">0</div>
+                <div class="stat-card-title">Kelas yang Diajar</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card" style="background-color: #f3e7fe; color: #a14be4; border-left-color: #a14be4;">
+                <div class="stat-card-icon" style="color: #a14be4;"><i class="fas fa-book-open"></i></div>
+                <div class="stat-card-number" th:text="${jumlahMapelDiampu} ?: '0'">0</div>
+                <div class="stat-card-title">Mapel yang Diampu</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card" style="background-color: #dfffee; color: #47c77c; border-left-color: #47c77c;">
+                <div class="stat-card-icon" style="color: #47c77c;"><i class="fas fa-users"></i></div>
+                <div class="stat-card-number" th:text="${jumlahSiswaTotal} ?: '0'">0</div>
+                <div class="stat-card-title">Total Siswa di Sekolah</div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card" style="background-color: #fff0e0; color: #e49b4b; border-left-color: #e49b4b;">
+                <div class="stat-card-icon" style="color: #e49b4b;"><i class="fas fa-edit"></i></div>
+                <div class="stat-card-number" th:text="${jumlahNilaiDiinput} ?: '0'">0</div>
+                <div class="stat-card-title">Nilai Telah Diinput</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h5 class="text-muted mb-3">Aksi Cepat & Panduan</h5>
+        <div class="row g-3">
+            <div class="col-lg-4">
+                <a th:href="@{/guru/manajemen-siswa-guru}" class="manual-item">
+                    <div>
+                        <strong>Input Nilai Rapor</strong>
+                        <small class="d-block text-muted">Pilih siswa untuk mulai menginput nilai.</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+             <div class="col-lg-4">
+                <a href="@/guru/manajemen-siswa" class="manual-item">
+                    <div>
+                        <strong>Lihat Status Penilaian</strong>
+                        <small class="d-block text-muted">Memeriksa kelengkapan nilai yang sudah diinput.</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+             <div class="col-lg-4">
+                <a href="@/guru/proses-deskripsi" class="manual-item">
+                    <div>
+                        <strong>Panduan Aplikasi</strong>
+                        <small class="d-block text-muted">Baca panduan penggunaan e-Rapor untuk guru.</small>
+                    </div>
+                    <i class="fas fa-book-reader"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Cek Nilai Siswa</title>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb-item">
+        <li class="breadcrumb-item"><a th:href="@{/guru/dashboard}">Guru</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/guru/manajemen-siswa}">Manajemen Siswa</a></li>
+    </div>
+    <div layout:fragment="breadcrumb-active" th:text="'Cek Nilai ' + ${siswa.nama}">Cek Nilai Siswa</div>
+
+    <div layout:fragment="content">
+        <h1 class="mb-4"><i class="fas fa-clipboard-list me-2"></i> Cek Nilai Siswa: <span th:text="${siswa.nama}"></span></h1>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Nilai untuk <span th:text="${siswa.nama}"></span></h5>
+                <a th:href="@{/guru/input-nilai/{nis}(nis=${siswa.nis})}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle me-2"></i> Tambah Nilai Baru</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Mata Pelajaran</th>
+                                <th scope="col">Nilai Tugas</th>
+                                <th scope="col">Nilai UTS</th>
+                                <th scope="col">Nilai UAS</th>
+                                <th scope="col">Nilai Akhir</th>
+                                <th scope="col" class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="nilai, iterStat : ${daftarNilai}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${nilai.mataPelajaran.namaMataPelajaran}"></td>
+                                <td th:text="${nilai.nilaiTugas}"></td>
+                                <td th:text="${nilai.nilaiUts}"></td>
+                                <td th:text="${nilai.nilaiUas}"></td>
+                                <td><span th:classappend="${nilai.hitungNilaiAkhir() >= 75 ? 'bg-primary' : 'bg-warning'}" th:text="${#numbers.formatDecimal(nilai.hitungNilaiAkhir(), 0, 1)}" class="badge fs-6"></span></td>
+                                <td class="text-center">
+                                    <a th:href="@{/guru/edit-nilai/{nilaiId}(nilaiId=${nilai.id})}" class="btn btn-warning btn-sm me-2" data-bs-toggle="tooltip" title="Edit Nilai Ini"><i class="fas fa-edit"></i> Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteNilaiModal' + ${nilai.id}" title="Hapus Nilai"><i class="fas fa-trash-alt"></i> Hapus</button>
+                                </td>
+                            </tr>
+                            <tr th:if="${daftarNilai.isEmpty()}">
+                                <td colspan="7" class="text-center text-muted">Belum ada nilai untuk siswa ini.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div th:each="nilai : ${daftarNilai}">
+            <div class="modal fade" th:id="'deleteNilaiModal' + ${nilai.id}" tabindex="-1" aria-labelledby="'deleteNilaiModalLabel' + ${nilai.id}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:id="'deleteNilaiModalLabel' + ${nilai.id}">Konfirmasi Hapus Nilai</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah Anda yakin ingin menghapus nilai mata pelajaran <strong th:text="${nilai.mataPelajaran.namaMataPelajaran}"></strong> untuk siswa <strong th:text="${siswa.nama}"></strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <form th:action="@{/guru/hapus-nilai/{id}(id=${nilai.id})}" method="post">
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

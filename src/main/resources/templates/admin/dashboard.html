@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Dashboard Admin</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h4 class="mb-4">Dashboard Administrator</h4>
+
+    <h5 class="text-muted mb-3">Rekap Data Utama</h5>
+    <div class="row g-4">
+        <div class="col-xl-3 col-md-6">
+            <a th:href="@{/admin/manajemen-guru}" class="stat-card-link">
+                <div class="stat-card" style="background-color: #e7f0fe; border-left-color: #4b88e4;">
+                    <div class="stat-card-icon" style="color: #4b88e4;"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="stat-card-number" th:text="${totalGuru} ?: '0'">0</div>
+                    <div class="stat-card-title">Data Guru</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+             <a th:href="@{/admin/manajemen-siswa}" class="stat-card-link">
+                <div class="stat-card" style="background-color: #dfffee; border-left-color: #47c77c;">
+                    <div class="stat-card-icon" style="color: #47c77c;"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stat-card-number" th:text="${totalSiswa} ?: '0'">0</div>
+                    <div class="stat-card-title">Data Siswa</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <a th:href="@{/admin/manajemen-mapel}" class="stat-card-link">
+                <div class="stat-card" style="background-color: #fff0e0; border-left-color: #e49b4b;">
+                    <div class="stat-card-icon" style="color: #e49b4b;"><i class="fas fa-book"></i></div>
+                    <div class="stat-card-number" th:text="${totalMataPelajaran} ?: '0'">0</div>
+                    <div class="stat-card-title">Data Mapel</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card" style="background-color: #f2f3f5; border-left-color: #6c757d;">
+                <div class="stat-card-icon" style="color: #6c757d;"><i class="fas fa-users"></i></div>
+                <div class="stat-card-number" th:text="${totalPengguna} ?: '0'">0</div>
+                <div class="stat-card-title">Total Pengguna</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h5 class="text-muted mb-3">Aksi Cepat</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <a th:href="@{/admin/manajemen-guru/tambah}" class="manual-item">
+                    <div>
+                        <strong>Tambah Guru Baru</strong>
+                        <small class="d-block text-muted">Mendaftarkan akun dan data untuk guru.</small>
+                    </div>
+                    <i class="fas fa-plus-circle text-primary"></i>
+                </a>
+            </div>
+             <div class="col-md-4">
+                <a th:href="@{/admin/manajemen-siswa/tambah}" class="manual-item">
+                    <div>
+                        <strong>Tambah Siswa Baru</strong>
+                        <small class="d-block text-muted">Mendaftarkan akun dan data untuk siswa.</small>
+                    </div>
+                    <i class="fas fa-plus-circle text-primary"></i>
+                </a>
+            </div>
+             <div class="col-md-4">
+                <a th:href="@{/admin/manajemen-mapel/tambah}" class="manual-item">
+                    <div>
+                        <strong>Tambah Mapel Baru</strong>
+                        <small class="d-block text-muted">Menambahkan mata pelajaran baru ke sistem.</small>
+                    </div>
+                    <i class="fas fa-plus-circle text-primary"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

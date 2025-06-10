@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}"> <head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+    <th:block layout:fragment="head">
+        </th:block>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb-item">
+        <li class="breadcrumb-item"><a th:href="@{/admin/dashboard}">Admin</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/admin/manajemen-mapel}">Manajemen Mata Pelajaran</a></li>
+    </div>
+    <div layout:fragment="breadcrumb-active" th:text="${formTitle}">Form</div>
+
+    <div layout:fragment="content">
+        <h1 class="mb-4" th:text="${formTitle}"></h1>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0" th:text="${formTitle}"></h5>
+            </div>
+            <div class="card-body">
+                <form th:action="@{${actionUrl}}" th:object="${mataPelajaran}" method="post">
+                    <div class="mb-3">
+                        <label for="namaMataPelajaran" class="form-label">Nama Mata Pelajaran:</label>
+                        <input type="text" class="form-control" id="namaMataPelajaran" th:field="*{namaMataPelajaran}" required>
+                    </div>
+
+                    <div class="d-flex justify-content-end pt-3">
+                        <a th:href="@{/admin/manajemen-mapel}" class="btn btn-secondary me-2">Batal</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+        </th:block>
+</body>
+</html>

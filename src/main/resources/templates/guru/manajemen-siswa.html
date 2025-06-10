@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Manajemen Siswa</title>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb-item">
+        <li class="breadcrumb-item"><a th:href="@{/guru/dashboard}">Guru</a></li>
+    </div>
+    <div layout:fragment="breadcrumb-active">Manajemen Siswa</div>
+
+    <div layout:fragment="content">
+        <h1 class="mb-4"><i class="fas fa-users me-2"></i> Manajemen Siswa</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Siswa</h5>
+                <a th:href="@{/guru/input-nilai/tambah}" class="btn btn-primary btn-sm disabled" aria-disabled="true" data-bs-toggle="tooltip" title="Input nilai dilakukan per siswa, bukan massal">
+                    <i class="fas fa-plus-circle me-2"></i> Input Nilai (Massal)
+                </a>
+            </div>
+            <div class="card-body">
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> <span th:text="${successMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i> <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama Siswa</th>
+                                <th scope="col">NIS</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Username</th>
+                                <th scope="col" class="text-center">Aksi Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="siswa, iterStat : ${siswas}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${siswa.nama}"></td>
+                                <td th:text="${siswa.nis}"></td>
+                                <td th:text="${siswa.kelas}"></td>
+                                <td th:text="${siswa.user.username}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{/guru/input-nilai/{nis}(nis=${siswa.nis})}" class="btn btn-primary btn-sm me-2" data-bs-toggle="tooltip" title="Input Nilai Baru"><i class="fas fa-keyboard"></i> Input</a>
+                                    <a th:href="@{/guru/cek-nilai/{nis}(nis=${siswa.nis})}" class="btn btn-warning btn-sm me-2" data-bs-toggle="tooltip" title="Lihat/Edit Nilai"><i class="fas fa-edit"></i> Edit/Cek</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${siswas.isEmpty()}">
+                                <td colspan="6" class="text-center text-muted">Tidak ada data siswa.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

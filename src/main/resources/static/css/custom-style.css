@@ -1,0 +1,187 @@
+/* Gaya Font dan Body Utama */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7fc; /* Latar belakang abu-abu sangat muda */
+    font-size: 14px;
+    color: #555;
+}
+
+.page-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* --- Gaya Sidebar Baru (Putih) --- */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #ffffff;
+    color: #495057;
+    transition: all 0.3s;
+    border-right: 1px solid #dee2e6;
+    z-index: 1000;
+}
+
+/* Kondisi saat sidebar disembunyikan oleh JavaScript */
+#sidebar.active {
+    margin-left: -250px;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.sidebar-header h3 {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+#sidebar ul.components {
+    padding: 15px 0;
+}
+
+#sidebar ul li.menu-header {
+    padding: 10px 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #adb5bd;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 0.9em;
+    display: block;
+    color: #495057;
+    font-weight: 500;
+    border-radius: 5px;
+    margin: 0 10px 5px 10px;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+#sidebar ul li a:hover {
+    color: #0d6efd;
+    background: #e7f0fe;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #ffffff;
+    background: #0d6efd;
+    box-shadow: 0 2px 5px rgba(13, 110, 253, 0.3);
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+ul ul a { /* Styling untuk submenu dropdown */
+    font-size: 0.85em !important;
+    padding-left: 40px !important;
+    background: #f8f9fa;
+    margin: 2px 10px;
+}
+
+/* --- Gaya Konten Utama --- */
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.top-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1.5rem;
+}
+
+.top-header-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.top-header .btn {
+    box-shadow: none;
+}
+
+/* --- Gaya Khusus Halaman Dashboard (Statistik & Manual) --- */
+.stat-card {
+    background-color: #f2f3f5;
+    border-radius: 8px;
+    padding: 20px;
+    height: 100%;
+    border-left: 5px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.stat-card-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-card-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+.manual-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: #333;
+    border-left: 5px solid;
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease-in-out;
+}
+
+.manual-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    color: #0d6efd;
+}
+
+.manual-item i {
+    font-size: 1.5rem;
+    color: #adb5bd;
+}

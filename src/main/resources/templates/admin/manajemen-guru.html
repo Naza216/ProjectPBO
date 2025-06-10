@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Manajemen Guru</title>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb-item">
+        <li class="breadcrumb-item"><a th:href="@{/admin/dashboard}">Admin</a></li>
+    </div>
+    <div layout:fragment="breadcrumb-active">Manajemen Guru</div>
+
+    <div layout:fragment="content">
+        <h1 class="mb-4"><i class="fas fa-chalkboard-teacher me-2"></i> Manajemen Guru</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Guru</h5>
+                <a th:href="@{/admin/manajemen-guru/tambah}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle me-2"></i> Tambah Guru</a>
+            </div>
+            <div class="card-body">
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> <span th:text="${successMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i> <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama Guru</th>
+                                <th scope="col">NIP</th>
+                                <th scope="col">Username</th>
+                                <th scope="col" class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="guru, iterStat : ${gurus}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${guru.nama}"></td>
+                                <td th:text="${guru.nip}"></td>
+                                <td th:text="${guru.user.username}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{/admin/manajemen-guru/edit/{id}(id=${guru.id})}" class="btn btn-warning btn-sm me-2" data-bs-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteGuruModal" th:data-id="${guru.id}" th:data-nama="${guru.nama}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr th:if="${gurus.isEmpty()}">
+                                <td colspan="5" class="text-center text-muted">Tidak ada data guru.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteGuruModal" tabindex="-1" aria-labelledby="deleteGuruModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteGuruModalLabel">Konfirmasi Hapus Guru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin menghapus guru <strong id="guruNama"></strong>? Tindakan ini tidak dapat dibatalkan.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <form th:action="@{/admin/manajemen-guru/hapus}" method="post" id="deleteGuruForm">
+                            <input type="hidden" name="id" id="deleteGuruId" value="">
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <th:block layout:fragment="script">
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var deleteGuruModal = document.getElementById('deleteGuruModal');
+                    deleteGuruModal.addEventListener('show.bs.modal', function (event) {
+                        var button = event.relatedTarget; // Button that triggered the modal
+                        var guruId = button.getAttribute('data-id'); // Extract info from data-id attribute
+                        var guruNama = button.getAttribute('data-nama'); // Extract info from data-nama attribute
+
+                        var modalGuruNama = deleteGuruModal.querySelector('#guruNama');
+                        var modalDeleteIdInput = deleteGuruModal.querySelector('#deleteGuruId');
+                        var modalForm = deleteGuruModal.querySelector('#deleteGuruForm');
+
+                        modalGuruNama.textContent = guruNama;
+                        modalDeleteIdInput.value = guruId;
+                        modalForm.action = '/admin/manajemen-guru/hapus/' + guruId; // Update form action
+                    });
+                });
+            </script>
+        </th:block>
+    </div>
+</body>
+</html>
